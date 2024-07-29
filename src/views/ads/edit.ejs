@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= ad.title %>ni Tahrirlash</title>
+</head>
+<body>
+    <h1><%= ad.title %>ni Tahrirlash</h1>
+    <form action="/ads/<%= ad.id %>/update" method="POST">
+        <label for="title">Sarlavha:</label>
+        <input type="text" id="title" name="title" value="<%= ad.title %>" required>
+        <br>
+        <label for="description">Tavsif:</label>
+        <textarea id="description" name="description" required><%= ad.description %></textarea>
+        <br>
+        <label for="price">Narxi:</label>
+        <input type="number" id="price" name="price" value="<%= ad.price %>" required>
+        <br>
+        <button type="submit">Yangilash</button>
+    </form>
+    <a href="/ads">Orqaga</a>
+</body>
+</html>

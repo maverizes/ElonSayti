@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E'lonlar</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Hamma E'lonlar</h1>
+        <div class="mb-3">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#newAdModal">Yangi E'lon Qo'shish</button>
+        </div>
+        <ul class="list-group">
+            <% ads.forEach(ad => { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <a href="/ads/<%= ad.id %>"><%= ad.title %></a>
+                    </span>
+                    <div>
+                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#editAdModal" onclick="editAd('<%= ad.id %>', '<%= ad.title %>', '<%= ad.description %>', '<%= ad.price %>')">Tahrirlash</button>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAdModal" onclick="deleteAd('<%= ad.id %>')">O'chirish</button>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+
+    <!-- Yangi E'lon Qo'shish Modal -->
+    <div class="modal fade" id="newAdModal" tabindex="-1" role="dialog" aria-labelledby="newAdModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/ads" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newAdModalLabel">Yangi E'lon Qo'shish</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">Sarlavha:</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Tavsif:</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Narxi:</label>
+                            <input type="number" class="form-control" id="price" name="price" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+                        <button type="submit" class="btn btn-primary">Qo'shish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tahrirlash Modal -->
+    <div class="modal fade" id="editAdModal" tabindex="-1" role="dialog" aria-labelledby="editAdModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="" method="POST" id="editAdForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editAdModalLabel">E'lonni Tahrirlash</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="editTitle">Sarlavha:</label>
+                            <input type="text" class="form-control" id="editTitle" name="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editDescription">Tavsif:</label>
+                            <textarea class="form-control" id="editDescription" name="description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="editPrice">Narxi:</label>
+                            <input type="number" class="form-control" id="editPrice" name="price" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+                        <button type="submit" class="btn btn-primary">Yangilash</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- O'chirish Modal -->
+    <div class="modal fade" id="deleteAdModal" tabindex="-1" role="dialog" aria-labelledby="deleteAdModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="" method="POST" id="deleteAdForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteAdModalLabel">E'lonni O'chirish</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Siz haqiqatdan ham ushbu e'lonni o'chirmoqchimisiz?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+                        <button type="submit" class="btn btn-danger">O'chirish</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function editAd(id, title, description, price) {
+            document.getElementById('editTitle').value = title;
+            document.getElementById('editDescription').value = description;
+            document.getElementById('editPrice').value = price;
+            document.getElementById('editAdForm').action = '/ads/' + id + '/update';
+        }
+
+        function deleteAd(id) {
+            document.getElementById('deleteAdForm').action = '/ads/' + id + '/delete';
+        }
+    </script>
+</body>
+</html>

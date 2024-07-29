@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "title": "Birinci e'lon",
+    "description": "Bu birinchi e'lonning tavsifi",
+    "price": 100000
+  },
+  {
+    "id": "2",
+    "title": "Ikkinchi e'lon",
+    "description": "Bu ikkinchi e'lonning tavsifi",
+    "price": 200000
+  }
+]
